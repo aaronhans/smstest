@@ -2,7 +2,6 @@
   "name": "begin-app-get-index",
   "dependencies": {
     "@architect/functions": "latest",
-    "@begin/data": "latest",
-    "twilio": "^3.39.1"
+    "@begin/data": "latest"
   }
 }
