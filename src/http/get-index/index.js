@@ -1,9 +1,9 @@
 
 exports.handler = async function http(req) {
-let body = `hi`;
+  let body = `hi`;
   const client = require('twilio')(process.env.TWILIOSID, process.env.TWILIOTOKEN);
   console.log('attempting to connect to twilio')
-
+/*
   let twilioResponse = await new Promise(resolve => {
     client.messages
     .create({
@@ -19,7 +19,8 @@ let body = `hi`;
   });
 
   console.log('response is '+twilioResponse)
-  
+  // this works great but gets triggered at / on every request so let's not text me everytime
+*/
   return {
     headers: {
       'content-type': 'text/html; charset=utf8',
