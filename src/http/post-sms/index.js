@@ -2,7 +2,7 @@ let arc = require('@architect/functions')
 
 exports.handler = async function http(req) {
   let reqbody = arc.http.helpers.bodyParser(request)
-  let textVal = reqbody.Body
+  let textVal = req.body.Body
 
   let body = '';
   let twilioResponse = await new Promise(resolve => {
