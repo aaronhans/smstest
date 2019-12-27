@@ -1,2 +1,0 @@
-# smstest
-Begin app
