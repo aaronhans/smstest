@@ -1,4 +1,4 @@
-const client = require('twilio')(env.TWILIOSID, env.TWILIOTOKEN);
+const client = require('twilio')(process.env.TWILIOSID, process.env.TWILIOTOKEN);
 
 let body = `hi`
 
