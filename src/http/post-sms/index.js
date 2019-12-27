@@ -4,7 +4,7 @@ exports.handler = async function http(req) {
   let twilioResponse = await new Promise(resolve => {
     const MessagingResponse = require('twilio').twiml.MessagingResponse;
     const twiml = new MessagingResponse();
-    twiml.message('The Robots are coming! Head for the hills!');
+    twiml.message(`Hello, thanks for contacting Alpha.CA.gov! The nearest food bank to ${req.body} is the Sacramento County food bank at 3333 3rd Ave., Sacramento. Their website is http://www.foodlink.org/ you can reach them via phone at (916) 456-1980, directions: https://maps.google.com/maps?daddr=38.55248,-121.47032`);
     body = twiml.toString();
     resolve(twiml.toString())
   });
