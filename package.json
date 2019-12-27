@@ -9,6 +9,7 @@
     "@architect/sandbox": "latest"
   },
   "dependencies": {
-    "cross-env": "^6.0.3"
+    "cross-env": "^6.0.3",
+    "twilio": "^3.39.1"
   }
 }
