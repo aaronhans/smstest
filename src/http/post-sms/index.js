@@ -3,7 +3,7 @@ let arc = require('@architect/functions')
 exports.handler = async function http(req) {
   let reqbody = arc.http.helpers.bodyParser(req)
   let textVal = reqbody.Body
-/*
+
   let body = '';
   let twilioResponse = await new Promise(resolve => {
     const MessagingResponse = require('twilio').twiml.MessagingResponse;
@@ -16,9 +16,7 @@ exports.handler = async function http(req) {
   console.log('response is '+twilioResponse)
 
   body = twilioResponse;
-*/
 
-  let body = textVal
   return {
     headers: {
       'content-type': 'text/xml; charset=utf8',
