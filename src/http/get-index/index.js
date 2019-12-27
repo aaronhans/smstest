@@ -1,13 +1,6 @@
 
 exports.handler = async function http(req) {
-  const MessagingResponse = require('twilio').twiml.MessagingResponse;
-  const twiml = new MessagingResponse();
-  twiml.message('The Robots are coming! Head for the hills!');
-  let body = twiml.toString();
-
-  /*
-  // this works great
-  // let body = `hi`;
+let body = `hi`;
   const client = require('twilio')(process.env.TWILIOSID, process.env.TWILIOTOKEN);
   console.log('attempting to connect to twilio')
 
@@ -26,10 +19,10 @@ exports.handler = async function http(req) {
   });
 
   console.log('response is '+twilioResponse)
-  */
+  
   return {
     headers: {
-      'content-type': 'text/xml; charset=utf8',
+      'content-type': 'text/html; charset=utf8',
       'cache-control': 'no-cache, no-store, must-revalidate, max-age=0, s-maxage=0'
     },
     body

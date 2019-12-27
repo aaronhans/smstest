@@ -7,6 +7,7 @@ begin-app
 
 @http
 get /
+post /sms
 
 @tables
 data

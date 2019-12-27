@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "description": "Begin basic Hello World! app",
   "scripts": {
-    "start": "cross-env NODE_ENV=testing npx sandbox"
+    "start": "cross-env NODE_ENV=testing npx sandbox",
+    "setup": "arc init"
   },
   "devDependencies": {
     "@architect/sandbox": "latest",
