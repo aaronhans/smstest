@@ -3,6 +3,7 @@
   "dependencies": {
     "@architect/functions": "latest",
     "@begin/data": "latest",
+    "haversine": "^1.1.1",
     "twilio": "^3.39.1"
   }
 }

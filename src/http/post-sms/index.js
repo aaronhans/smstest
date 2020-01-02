@@ -1,7 +1,7 @@
 let arc = require('@architect/functions')
-let cities = require('cities.json')
+let cities = require('./cities.json')
 let haversine = require('haversine')
-let foods = require('foods.json')
+let foods = require('./foods.json')
 
 exports.handler = async function http(req) {
   let reqbody = arc.http.helpers.bodyParser(req)
