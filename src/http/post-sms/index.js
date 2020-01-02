@@ -18,9 +18,9 @@ exports.handler = async function http(req) {
       }
     })
     if(cityFound) {
-      let coords = city.geometry.coordinates;
+      let coords = cityFound.geometry.coordinates;
       let sortedLocs = foods.features.sort(function (a, b) {
-        return haversine(coords, a, { format: 'geojson', unit: 'mile' }) - haversine(coords, b, { format: 'geojson', unit: 'mile' })
+        return haversine(cityFound, a, { format: 'geojson', unit: 'mile' }) - haversine(cityFound, b, { format: 'geojson', unit: 'mile' })
       })
       let closestFood = sortedLocs[0];
       message = `Hi! Your nearest food bank is the ${closestFood.properties.title} at ${closestFood.properties.address}`;
