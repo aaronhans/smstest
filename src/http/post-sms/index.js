@@ -1,4 +1,7 @@
 let arc = require('@architect/functions')
+let cities = require('cities.json')
+let haversine = require('haversine')
+let foods = require('foods.json')
 
 exports.handler = async function http(req) {
   let reqbody = arc.http.helpers.bodyParser(req)
@@ -8,7 +11,34 @@ exports.handler = async function http(req) {
   let twilioResponse = await new Promise(resolve => {
     const MessagingResponse = require('twilio').twiml.MessagingResponse;
     const twiml = new MessagingResponse();
-    twiml.message(`Hello, thanks for contacting Alpha.CA.gov! The nearest food bank to ${textVal} is the Sacramento County food bank at 3333 3rd Ave., Sacramento. Their website is http://www.foodlink.org/ you can reach them via phone at (916) 456-1980, directions: https://maps.google.com/maps?daddr=38.55248,-121.47032`);
+    let cityFound = '';
+    cities.forEach( (city) => {
+      if(textVal == city.properties.title) {
+        cityFound = city;
+      }
+    })
+    if(cityFound) {
+      let coords = city.geometry.coordinates;
+      let sortedLocs = foods.features.sort(function (a, b) {
+        return haversine(coords, a, { format: 'geojson', unit: 'mile' }) - haversine(coords, b, { format: 'geojson', unit: 'mile' })
+      })
+      let closestFood = sortedLocs[0];
+      message = `Hi! Your nearest food bank is the ${closestFood.properties.title} at ${closestFood.properties.address}`;
+      if(closestFood.properties.address2) {
+        message += `, ${closestFood.properties.address2}. `;
+      }
+      if(closestFood.properties.website) { 
+        message += `Their website is ${closestFood.properties.website}. `;
+      }
+      if(closestFood.properties.phone) { 
+        message += `Call them at ${closestFood.properties.phone}. `;
+      }
+      message += `Get directions: https://maps.google.com/maps?daddr=${coords[1]},${coords[0]}`;
+
+    } else {
+      message = 'We did not recognize that location. Please text a city name or zip code';
+    }
+    twiml.message(message);
     body = twiml.toString();
     resolve(twiml.toString())
   });
