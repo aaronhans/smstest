@@ -11,32 +11,37 @@ exports.handler = async function http(req) {
   let twilioResponse = await new Promise(resolve => {
     const MessagingResponse = require('twilio').twiml.MessagingResponse;
     const twiml = new MessagingResponse();
-    let cityFound = '';
-    cities.forEach( (city) => {
-      if(textVal == city.properties.title) {
-        cityFound = city;
-      }
-    })
-    if(cityFound) {
-      let coords = cityFound.geometry.coordinates;
-      let sortedLocs = foods.features.sort(function (a, b) {
-        return haversine(cityFound, a, { format: 'geojson', unit: 'mile' }) - haversine(cityFound, b, { format: 'geojson', unit: 'mile' })
-      })
-      let closestFood = sortedLocs[0];
-      message = `Hi! Your nearest food bank is the ${closestFood.properties.title} at ${closestFood.properties.address}`;
-      if(closestFood.properties.address2) {
-        message += `, ${closestFood.properties.address2}. `;
-      }
-      if(closestFood.properties.website) { 
-        message += `Their website is ${closestFood.properties.website}. `;
-      }
-      if(closestFood.properties.phone) { 
-        message += `Call them at ${closestFood.properties.phone}. `;
-      }
-      message += `Get directions: https://maps.google.com/maps?daddr=${coords[1]},${coords[0]}`;
-
+    let message = '';
+    if(textVal == 'STOP') {
+      message = 'Your stop message has been received. You will not receive any more messages from the California Food Bank service';
     } else {
-      message = 'We did not recognize that location. Please text a city name or zip code';
+      let cityFound = '';
+      cities.forEach( (city) => {
+        if(textVal == city.properties.title) {
+          cityFound = city;
+        }
+      })
+      if(cityFound) {
+        let coords = cityFound.geometry.coordinates;
+        let sortedLocs = foods.features.sort(function (a, b) {
+          return haversine(cityFound, a, { format: 'geojson', unit: 'mile' }) - haversine(cityFound, b, { format: 'geojson', unit: 'mile' })
+        })
+        let closestFood = sortedLocs[0];
+        message = `Hi! Your nearest food bank is the ${closestFood.properties.title} at ${closestFood.properties.address}`;
+        if(closestFood.properties.address2) {
+          message += `, ${closestFood.properties.address2}. `;
+        }
+        if(closestFood.properties.website) { 
+          message += `Their website is ${closestFood.properties.website}. `;
+        }
+        if(closestFood.properties.phone) { 
+          message += `Call them at ${closestFood.properties.phone}. `;
+        }
+        message += `Get directions: https://maps.google.com/maps?daddr=${coords[1]},${coords[0]}`;
+  
+      } else {
+        message = 'We did not recognize that location. Please text a city name or zip code';
+      }
     }
     twiml.message(message);
     body = twiml.toString();
