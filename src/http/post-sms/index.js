@@ -2,6 +2,13 @@ let arc = require('@architect/functions')
 let cities = require('./cities.json')
 let haversine = require('haversine')
 let foods = require('./foods.json')
+let zips = require('./unique-zips.json')
+let zipMap = new Map();
+zips.forEach( (item) => {
+  for(var key in item) {
+    zipMap.set(key, item[key])
+  }
+})
 
 exports.handler = async function http(req) {
   let reqbody = arc.http.helpers.bodyParser(req)
@@ -21,6 +28,17 @@ exports.handler = async function http(req) {
           cityFound = city;
         }
       })
+      if(!cityFound) {
+        if(zipMap.get(textVal)) {
+          zipMap.get(textVal).forEach( (potentialCity) => {
+            cities.forEach( (city) => {
+              if(potentialCity == city.properties.title) {
+                cityFound = city;
+              }
+            })      
+          })
+        }
+      }
       if(cityFound) {
         let coords = cityFound.geometry.coordinates;
         let sortedLocs = foods.features.sort(function (a, b) {
