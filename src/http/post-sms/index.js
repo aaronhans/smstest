@@ -24,7 +24,7 @@ exports.handler = async function http(req) {
     } else {
       let cityFound = '';
       cities.forEach( (city) => {
-        if(textVal == city.properties.title) {
+        if(textVal.trim().toLowerCase() == city.properties.title.trim().toLowerCase()) {
           cityFound = city;
         }
       })
@@ -32,7 +32,7 @@ exports.handler = async function http(req) {
         if(zipMap.get(textVal)) {
           zipMap.get(textVal).forEach( (potentialCity) => {
             cities.forEach( (city) => {
-              if(potentialCity == city.properties.title) {
+              if(potentialCity.trim().toLowerCase() == city.properties.title.trim().toLowerCase()) {
                 cityFound = city;
               }
             })      
