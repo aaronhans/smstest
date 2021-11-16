@@ -8,7 +8,7 @@
   },
   "devDependencies": {
     "@architect/sandbox": "latest",
-    "aws-sdk": "^2.596.0"
+    "aws-sdk": "^2.814.0"
   },
   "dependencies": {
     "cross-env": "^6.0.3",
